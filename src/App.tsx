@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import Game from './Game'
 import './App.css'
 
 function App() {
@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-
+      <Game size={8} nMines={10} />
     </>
   )
 }
