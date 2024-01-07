@@ -69,8 +69,7 @@ function findNeighbors (board: BoardSpace[][], space: BoardSpace): void {
 
 }
 
-//FIXME: This isn't right, actually. Seems like it shouldn't splash diagnolly?
-// Need to rethink use of neighbor list. Can hack fix now.
+
 function splashFlipZeroes (space: BoardSpace): void {
   const seen: Set<BoardSpace> = new Set([]);
   _splashFlipZeroes(space);
@@ -79,6 +78,7 @@ function splashFlipZeroes (space: BoardSpace): void {
     _space.revealed = 1;
     seen.add(_space);
     for (const neighbor of _space.neighbors) {
+      neighbor.revealed = 1;
       if (neighbor.val === 0 && !seen.has(neighbor)) {
         _splashFlipZeroes(neighbor);
       }
