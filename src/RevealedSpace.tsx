@@ -18,7 +18,7 @@ function RevealedSpace ({val}: RevealedSpacePropsInterface) {
     //TODO: get some art! :)
     return (
         <div className="RevealedSpace" onContextMenu={(evt) => {evt.preventDefault()}}>
-            {val}
+            {val > 0 ? val : ""}
         </div>
     )
 }

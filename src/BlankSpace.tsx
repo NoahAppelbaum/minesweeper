@@ -1,4 +1,4 @@
-import { DetailedHTMLProps, useState } from "react";
+import { useState } from "react";
 import "./stylesheets/BlankSpace.css"
 
 interface BlankSpacePropsInterface {
