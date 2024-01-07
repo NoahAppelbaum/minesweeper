@@ -1,3 +1,4 @@
+import { DetailedHTMLProps, useState } from "react";
 import "./stylesheets/BlankSpace.css"
 
 interface BlankSpacePropsInterface {
@@ -14,10 +15,16 @@ interface BlankSpacePropsInterface {
  */
 
 function BlankSpace ({coords, val, reveal}: BlankSpacePropsInterface) {
+    const [flagged, setFlagged] = useState(false);
+
+    function handleRightClick (evt): void {
+        evt.preventDefault();
+        setFlagged(!flagged);
+    }
 
     return (
-        <div className="BlankSpace" onClick={() => reveal(val, coords)}>
-
+        <div className="BlankSpace" onClick={() => reveal(val, coords)} onContextMenu={handleRightClick}>
+            {flagged && "X"}
         </div>
     )
 }

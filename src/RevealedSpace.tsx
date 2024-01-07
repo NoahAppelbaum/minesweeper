@@ -17,7 +17,7 @@ function RevealedSpace ({val}: RevealedSpacePropsInterface) {
 
     //TODO: get some art! :)
     return (
-        <div className="RevealedSpace">
+        <div className="RevealedSpace" onContextMenu={(evt) => {evt.preventDefault()}}>
             {val}
         </div>
     )
