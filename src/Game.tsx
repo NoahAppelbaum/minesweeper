@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { makeBoard } from "./utils";
+import { makeBoard, splashFlipZeroes } from "./utils";
 
 import RevealedSpace from "./RevealedSpace";
 import BlankSpace from "./BlankSpace";
@@ -26,6 +26,8 @@ function Game({size, nMines}: GamePropsInterface) {
     useEffect(() => checkWin())
 
     function revealSpace (val: number, coords: [number, number]): void {
+        const [y, x] = coords;
+
         if (val === -1) {
             //TODO: Some consequences! ...and reveal rest of board?
             alert("You Lost!");
@@ -33,13 +35,22 @@ function Game({size, nMines}: GamePropsInterface) {
             return;
         }
 
+        if (val === 0) {
+            setBoard(
+                prev => {
+                    const current = [...prev];
+                    splashFlipZeroes(current[y][x]);
+                    return current;
+            })
+        }
+
         //TODO: Can this be cleaner? Let's think.
-        setBoard(prev => prev.map((row, y) => row.map((space, x) => {
-            if (y === coords[0] && x === coords[1]) {
-                space.revealed = 1;
-            }
-            return space;
-        })));
+        setBoard(
+            prev => {
+                const current = [...prev];
+                current[y][x].revealed = 1;
+                return current;
+        });
     }
 
     //TODO: do a win thing.
