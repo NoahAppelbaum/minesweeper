@@ -50,8 +50,11 @@ function Timer ({timerSeconds}: TimerPropsInterface) {
         const minutes = Math.floor(secRemaining / 60);
         const seconds = secRemaining % 60;
 
+        const strMinutes = minutes < 10 ? "0" + String(minutes) : String(minutes);
+        const strSeconds = seconds < 10 ? "0" + String(seconds) : String(seconds);
+
         //TODO: fancier clock display?
-        return `${minutes}:${seconds}`;
+        return strMinutes + ":" + strSeconds;
     }
 
     return (
