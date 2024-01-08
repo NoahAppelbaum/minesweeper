@@ -1,6 +1,10 @@
 import Timer from "./Timer"
 import "./stylesheets/HeaderBar.css"
 
+interface HeaderBarPropsInterface {
+    timerSeconds: number;
+}
+
 //TODO: This needs props for rendered components
 /** HeaderBar
  * Component with game title, and UI components for timer and starting a game
@@ -8,14 +12,14 @@ import "./stylesheets/HeaderBar.css"
  * App -> HeaderBar -> {TODO: Components}
  */
 
-function HeaderBar () {
+function HeaderBar ({timerSeconds}: HeaderBarPropsInterface) {
 
     return (
         <div className="HeaderBar">
             {/* TODO: size-change button(s) */}
             <span>MINESWEEPA'</span>
             {/* TODO: restart button (refresh symbol?) */}
-            <Timer timerSeconds={60} />
+            <Timer timerSeconds={timerSeconds} />
         </div>
     )
 }

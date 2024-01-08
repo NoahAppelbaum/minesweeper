@@ -34,8 +34,7 @@ function Game({size, nMines}: GamePropsInterface) {
             //TODO: Prompt restart instead of returning here
             return;
         }
-
-        if (val === 0) {
+        else if (val === 0) {
             setBoard(
                 prev => {
                     const current = [...prev];
@@ -43,9 +42,7 @@ function Game({size, nMines}: GamePropsInterface) {
                     return current;
             })
         }
-
-        //TODO: Can this be cleaner? Let's think.
-        setBoard(
+        else setBoard(
             prev => {
                 const current = [...prev];
                 current[y][x].revealed = 1;
