@@ -22,13 +22,21 @@ function Timer ({timerSeconds}: TimerPropsInterface) {
     const timerId = useRef<NodeJS.Timeout | undefined>();
     const [secRemaining, setSecRemaining] = useState(timerSeconds);
 
-    useEffect (function countdown() {
+    useEffect (() => {
+            countdown();
+
+            return stopCountdown();
+        }, [])
+
+    function countdown(): void {
         timerId.current = setInterval(
             () => setSecRemaining(s => s - 1),
             1000);
+    }
 
-            return (() => clearInterval(timerId.current));
-        }, [])
+    function stopCountdown(): void {
+        clearInterval(timerId.current);
+    }
 
     //If no timer:
     if (timerSeconds === 0) {
