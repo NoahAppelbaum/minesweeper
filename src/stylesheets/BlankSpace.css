@@ -2,7 +2,12 @@
   height: 40px;
   width: 40px;
   background-color: gray;
-  border: 1px solid black;
+  border: 2px outset lightgrey;
 
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: darkred;
+  font-size: 36px;
 }
