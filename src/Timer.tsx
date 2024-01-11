@@ -2,7 +2,8 @@ import { useRef, useState, useEffect } from "react";
 import "./stylesheets/Timer.css";
 
 interface TimerPropsInterface {
-    timerSeconds: number
+    timerSeconds: number;
+    timeoutFn: VoidFunction;
 }
 //TODO: Should count ms for actual scoring -- more granular!
 
@@ -18,14 +19,14 @@ interface TimerPropsInterface {
  * Header -> Timer
  */
 
-function Timer ({timerSeconds}: TimerPropsInterface) {
+function Timer ({timerSeconds, timeoutFn}: TimerPropsInterface) {
     const timerId = useRef<NodeJS.Timeout | undefined>();
     const [secRemaining, setSecRemaining] = useState(timerSeconds);
 
     useEffect (() => {
             countdown();
 
-            return stopCountdown();
+            return stopCountdown;
         }, [])
 
     function countdown(): void {
@@ -51,7 +52,7 @@ function Timer ({timerSeconds}: TimerPropsInterface) {
     if (secRemaining === 0){
         //TODO: Need to pass this a callback to end game on timeout
         clearInterval(timerId.current);
-        alert("Timeout!")
+        timeoutFn();
     }
 
     function getDisplayTime (): string {

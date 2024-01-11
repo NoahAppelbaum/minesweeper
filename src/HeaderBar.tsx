@@ -3,6 +3,7 @@ import "./stylesheets/HeaderBar.css"
 
 interface HeaderBarPropsInterface {
     timerSeconds: number;
+    timeoutFn: VoidFunction;
 }
 
 //TODO: This needs props for rendered components
@@ -12,14 +13,14 @@ interface HeaderBarPropsInterface {
  * App -> HeaderBar -> {TODO: Components}
  */
 
-function HeaderBar ({timerSeconds}: HeaderBarPropsInterface) {
+function HeaderBar ({timerSeconds, timeoutFn}: HeaderBarPropsInterface) {
 
     return (
         <div className="HeaderBar">
             {/* TODO: size-change button(s) */}
             <span>MINESWEEPA'</span>
             {/* TODO: restart button (refresh symbol?) */}
-            <Timer timerSeconds={timerSeconds} />
+            <Timer timerSeconds={timerSeconds} timeoutFn={timeoutFn}/>
         </div>
     )
 }
