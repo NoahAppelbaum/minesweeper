@@ -87,4 +87,12 @@ function splashFlipZeroes (space: BoardSpace): void {
   }
 }
 
-export { makeBoard, splashFlipZeroes };
+function revealAll (board: BoardSpace[][]): BoardSpace[][] {
+  const revealed = board.map(row => row.map(space => {
+    space.revealed = 1;
+    return space;
+  }))
+  return revealed;
+}
+
+export { makeBoard, splashFlipZeroes, revealAll };
