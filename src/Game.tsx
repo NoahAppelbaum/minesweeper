@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { makeBoard, splashFlipZeroes } from "./utils";
+import { makeBoard, splashFlipZeroes, revealAll } from "./utils";
 
 import RevealedSpace from "./RevealedSpace";
 import BlankSpace from "./BlankSpace";
@@ -13,26 +13,27 @@ interface GamePropsInterface {
 /** Game
 A game of Minesweeper, which has game state
 props: size:integer, nMines:integer
-state: board -- The gameboard; a matrix of BoardSpaces which contain:
-    - val: number, value of space (-1 for mines, otherwise adjacent/touching mines)
-    - coords: [number, number], y/x coordinates of space
-    - revealed: 0 | 1, whether the space has been revealed
+state:
+    - board -- The gameboard; a matrix of BoardSpaces which contain:
+        - val: number, value of space (-1 for mines, otherwise adjacent/touching mines)
+        - coords: [number, number], y/x coordinates of space
+        - revealed: 0 | 1, whether the space has been revealed
+    - gameActive -- Whether the current game is active/ongoing
 
 App->Game->{ BlankSpace, RevealedSpace } */
 function Game({size, nMines}: GamePropsInterface) {
     const [board, setBoard] = useState(makeBoard(size, nMines));
+    const [gameActive, setGameActive] = useState(true);
 
-    //TODO: better time/way to check for win?
-    useEffect(() => checkWin())
+    useEffect(() => {
+        if (gameActive) checkWin();
+    })
 
     function revealSpace (val: number, coords: [number, number]): void {
         const [y, x] = coords;
 
         if (val === -1) {
-            //TODO: Some consequences! ...and reveal rest of board?
-            alert("You Lost!");
-            //TODO: Prompt restart instead of returning here
-            return;
+            loseGame();
         }
         else if (val === 0) {
             setBoard(
@@ -42,32 +43,48 @@ function Game({size, nMines}: GamePropsInterface) {
                     return current;
             })
         }
-        else setBoard(
-            prev => {
-                const current = [...prev];
-                current[y][x].revealed = 1;
-                return current;
-        });
+        else {
+            setBoard(
+                prev => {
+                    const current = [...prev];
+                    current[y][x].revealed = 1;
+                    return current;
+            });
+        }
+
     }
 
-    //TODO: do a win thing.
     function checkWin (): void {
         if (board.every(row => row.every(space => space.val === -1 || space.revealed))) {
-            alert("You Won!");
+            winGame();
         }
+    }
+
+
+    //TODO: prompt restart
+    function winGame (): void {
+        setBoard(prev => revealAll(prev));
+        alert("You Won!");
+        setGameActive(false);
+    }
+
+    function loseGame ():void {
+        alert("You Lost!");
+        setBoard(prev => revealAll(prev));
+        setGameActive(false);
     }
 
     //TODO: Make SpaceRow its own component. It will solve a lot of tortuous mapping! And better for styling.
     return (
         <div className="Game">
-            {board.map(row => (
-                <div className="SpaceRow">
-                {row.map(space => {
+            {board.map((row, y) => (
+                <div className="SpaceRow" key={y}>
+                {row.map((space, x) => {
                     if (space.revealed) {
-                        return <RevealedSpace val={space.val} />
+                        return <RevealedSpace val={space.val} key={x} />
                     }
                     else {
-                        return <BlankSpace coords={space.coords} val={space.val} reveal={revealSpace} />
+                        return <BlankSpace coords={space.coords} val={space.val} reveal={revealSpace} key={x} />
                     }
                 })}
                 </div>
