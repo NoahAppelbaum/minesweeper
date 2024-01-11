@@ -15,10 +15,17 @@ interface RevealedSpacePropsInterface {
 
 function RevealedSpace ({val}: RevealedSpacePropsInterface) {
 
+
+    function getRevealItem (): string {
+        if (val > 0) return String(val);
+        if (val === -1) return "💣";
+        return "";
+    }
+
     //TODO: get some art! :)
     return (
         <div className="RevealedSpace" onContextMenu={(evt) => {evt.preventDefault()}}>
-            {val > 0 ? val : ""}
+            {getRevealItem()}
         </div>
     )
 }
