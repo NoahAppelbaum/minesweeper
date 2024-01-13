@@ -16,10 +16,9 @@ function App() {
   This can be passed/drilled as needed to trigger warnings, and passed back up via callbacks */
 
   //TODO: fn(s) for changing settings
-  //FIXME: Timeout fn callback passing knot
   return (
     <div className='App'>
-      <HeaderBar timerSeconds={gameSettings.seconds} timeoutFn={()=>{alert("Timeout!")}}/>
+      <HeaderBar timerSeconds={gameSettings.seconds} />
       <Game size={gameSettings.size} nMines={gameSettings.nMines} />
     </div>
   )
