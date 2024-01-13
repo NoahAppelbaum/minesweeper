@@ -1,10 +1,9 @@
 import { useRef, useState, useEffect } from "react";
 import "./stylesheets/Timer.css";
 
-interface TimerPropsInterface {
-    timerSeconds: number;
-    timeoutFn: VoidFunction;
-}
+// interface TimerPropsInterface {
+//     timerSeconds: number;
+// }
 //TODO: Should count ms for actual scoring -- more granular!
 
 /** Timer
@@ -19,45 +18,40 @@ interface TimerPropsInterface {
  * Header -> Timer
  */
 
-function Timer ({timerSeconds, timeoutFn}: TimerPropsInterface) {
+function Timer () {
     const timerId = useRef<NodeJS.Timeout | undefined>();
-    const [secRemaining, setSecRemaining] = useState(timerSeconds);
+    const timeElapsed = useRef<number>(0);
 
     useEffect (() => {
-            countdown();
+            countup();
 
-            return stopCountdown;
+            return stopTimer;
         }, [])
 
-    function countdown(): void {
+    function countup(): void {
         timerId.current = setInterval(
-            () => setSecRemaining(s => s - 1),
+            () => {timeElapsed.current += 1},
             1000);
     }
 
-    function stopCountdown(): void {
+    function stopTimer(): void {
         clearInterval(timerId.current);
     }
 
+    //TODO: need any of this?
     //If no timer:
-    if (timerSeconds === 0) {
-        clearInterval(timerId.current);
-        return (
-            <div className="Timer">
-                <span>--:--</span>
-            </div>
-        )
-    }
-
-    if (secRemaining === 0){
-        //TODO: Need to pass this a callback to end game on timeout
-        clearInterval(timerId.current);
-        timeoutFn();
-    }
+    // if (timerSeconds === 0) {
+    //     clearInterval(timerId.current);
+    //     return (
+    //         <div className="Timer">
+    //             <span>--:--</span>
+    //         </div>
+    //     )
+    // }
 
     function getDisplayTime (): string {
-        const minutes = Math.floor(secRemaining / 60);
-        const seconds = secRemaining % 60;
+        const minutes = Math.floor(timeElapsed.current / 60);
+        const seconds = timeElapsed.current % 60;
 
         const strMinutes = minutes < 10 ? "0" + String(minutes) : String(minutes);
         const strSeconds = seconds < 10 ? "0" + String(seconds) : String(seconds);
