@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { makeBoard, splashFlipZeroes, revealAll } from "./utils";
+import { makeBoard, splashFlipZeroes, revealAll, placeMines } from "./utils";
 
 import RevealedSpace from "./RevealedSpace";
 import BlankSpace from "./BlankSpace";
@@ -24,6 +24,7 @@ App->Game->{ BlankSpace, RevealedSpace } */
 function Game({size, nMines}: GamePropsInterface) {
     const [board, setBoard] = useState(makeBoard(size, nMines));
     const [gameActive, setGameActive] = useState(true);
+    const [armed, setArmed] = useState(false);
 
     useEffect(() => {
         if (gameActive) checkWin();
@@ -31,6 +32,11 @@ function Game({size, nMines}: GamePropsInterface) {
 
     function revealSpace (val: number, coords: [number, number]): void {
         const [y, x] = coords;
+
+        if (!armed) {
+            placeMines(board, nMines, board[y][x]);
+            setArmed(true);
+        }
 
         if (val === -1) {
             loseGame();

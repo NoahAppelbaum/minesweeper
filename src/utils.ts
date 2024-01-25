@@ -4,7 +4,7 @@ interface BoardSpace {
   val: number;
   coords: [number, number];
   revealed: 0 | 1;
-  neighbors: BoardSpace[];
+  neighbors: Set<BoardSpace>;
 }
 
 /** makeBoard: Make a minesweeper gameboard,
@@ -14,7 +14,7 @@ function makeBoard (size: number, nMines: number): BoardSpace[][] {
   for (let y = 0; y < size; y++) {
     board.push([]);
     for (let x = 0; x < size; x++) {
-      board[y].push({val: 0, coords:[y,x], revealed: 0, neighbors: []});
+      board[y].push({val: 0, coords:[y,x], revealed: 0, neighbors: new Set});
     }
   }
 
@@ -22,27 +22,6 @@ function makeBoard (size: number, nMines: number): BoardSpace[][] {
   for (let y = 0; y < size; y++) {
     for (let x = 0; x < size; x++) {
       findNeighbors(board, board[y][x]);
-    }
-  }
-
-  //insert mines, and increment neighbors' count
-  let minesRemaining = nMines;
-  while (minesRemaining) {
-    const y = Math.floor(Math.random() * size);
-    const x = Math.floor(Math.random() * size);
-
-    const mineSpace = board[y][x];
-
-    if (mineSpace.val >= 0) {
-      mineSpace.val = -1;
-
-      for (const neighbor of mineSpace.neighbors) {
-        if (neighbor.val >= 0) {
-          neighbor.val++;
-        }
-      }
-
-      minesRemaining--;
     }
   }
 
@@ -62,11 +41,35 @@ function findNeighbors (board: BoardSpace[][], space: BoardSpace): void {
   for (let i = startY; i < endY; i++) {
     for (let j = startX; j < endX; j++) {
       if (board[i][j] != space) {
-        space.neighbors.push(board[i][j]);
+        space.neighbors.add(board[i][j]);
       }
     }
   }
 
+}
+
+function placeMines (board: BoardSpace[][], nMines: number, clicked: BoardSpace): void {
+  //insert mines, and increment neighbors' count
+  const size = board.length;
+  let minesRemaining = nMines;
+  while (minesRemaining) {
+    const y = Math.floor(Math.random() * size);
+    const x = Math.floor(Math.random() * size);
+
+    const mineSpace = board[y][x];
+
+    if (mineSpace.val >= 0 && mineSpace !== clicked && !clicked.neighbors.has(mineSpace)) {
+      mineSpace.val = -1;
+
+      for (const neighbor of mineSpace.neighbors) {
+        if (neighbor.val >= 0) {
+          neighbor.val++;
+        }
+      }
+
+      minesRemaining--;
+    }
+  }
 }
 
 
@@ -95,4 +98,4 @@ function revealAll (board: BoardSpace[][]): BoardSpace[][] {
   return revealed;
 }
 
-export { makeBoard, splashFlipZeroes, revealAll };
+export { makeBoard, splashFlipZeroes, revealAll, placeMines };
