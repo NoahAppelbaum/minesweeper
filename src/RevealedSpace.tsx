@@ -18,16 +18,29 @@ function RevealedSpace ({val}: RevealedSpacePropsInterface) {
 
     function getRevealItem (): string {
         if (val > 0) return String(val);
-        if (val === -1) return "💣";
         return "";
     }
 
     //TODO: get some art! :)
     return (
-        <div className="RevealedSpace" onContextMenu={(evt) => {evt.preventDefault()}}>
-            {getRevealItem()}
-        </div>
-    )
+      <div
+        className="RevealedSpace"
+        onContextMenu={(evt) => {
+          evt.preventDefault();
+        }}
+        style={
+          val <= 4
+            ? {
+                backgroundImage: `url(${val}.png)`,
+                backgroundSize: "contain"
+                // backgroundColor: "lightgreen",
+              }
+            : {}
+        }
+      >
+        {getRevealItem()}
+      </div>
+    );
 }
 
 export default RevealedSpace;

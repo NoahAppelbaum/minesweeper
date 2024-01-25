@@ -1,12 +1,22 @@
 .RevealedSpace {
-  height: 40px;
-  width: 40px;
-  background-color: lightgray;
+  height: 50px;
+  width: 50px;
+  background-color: lightblue;
   border: 2px inset gray;
 
   display: flex;
-  justify-content: center;
-  align-items: center;
-  color: black;
-  font-size: 20px;
+  justify-content: end;
+  align-items: end;
+  color: orangered;
+  font-size: 25px;
+
+  text-shadow:
+    -1px -1px 0 #000,
+     0   -1px 0 #000,
+     1px -1px 0 #000,
+     1px  0   0 #000,
+     1px  1px 0 #000,
+     0    1px 0 #000,
+    -1px  1px 0 #000,
+    -1px  0   0 #000;
 }
