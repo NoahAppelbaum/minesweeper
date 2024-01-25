@@ -1,13 +1,30 @@
 .BlankSpace {
-  height: 40px;
-  width: 40px;
-  background-color: gray;
+  height: 50px;
+  width: 50px;
+  /* background:
+  linear-gradient(-135deg, green 30%, transparent 30%) 25px 0,
+    linear-gradient(135deg, green 30%, transparent 30%) -25px 0,
+    linear-gradient(45deg, green 30%, transparent 30%),
+    linear-gradient(-45deg, green 30%, transparent 30%);
+  background-color: gold; */
+  background-color: green;
   border: 2px outset lightgrey;
 
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: darkred;
+  color: maroon;
   font-size: 36px;
+
+
+  text-shadow:
+    -1px -1px 0 #000,
+     0   -1px 0 #000,
+     1px -1px 0 #000,
+     1px  0   0 #000,
+     1px  1px 0 #000,
+     0    1px 0 #000,
+    -1px  1px 0 #000,
+    -1px  0   0 #000;
 }

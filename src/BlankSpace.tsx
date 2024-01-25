@@ -9,7 +9,7 @@ interface BlankSpacePropsInterface {
 
 /** BlankSpace
  * An unrevealed board space, clickable to reveal
- * TODO: add flagable
+ * state: flagged (boolean)
  *
  * Game -> BlankSpace
  */
