@@ -1,9 +1,9 @@
 import Timer from "./Timer"
+import JocelynFace from "./JocelynFace"
 import "./stylesheets/HeaderBar.css"
 
-interface HeaderBarPropsInterface {
-    timerSeconds: number;
-}
+
+
 
 //TODO: This needs props for rendered components
 /** HeaderBar
@@ -12,14 +12,15 @@ interface HeaderBarPropsInterface {
  * App -> HeaderBar -> {TODO: Components}
  */
 
-function HeaderBar ({timerSeconds}: HeaderBarPropsInterface) {
+function HeaderBar () {
 
     return (
         <div className="HeaderBar">
             {/* TODO: size-change button(s) */}
-            <span>MINESWEEPA'</span>
+            <span>Jocelyn Sweeper</span>
+            <JocelynFace />
             {/* TODO: restart button (refresh symbol?) */}
-            <Timer timerSeconds={timerSeconds} />
+            <Timer />
         </div>
     )
 }
