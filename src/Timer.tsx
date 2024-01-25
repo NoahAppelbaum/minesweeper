@@ -20,7 +20,7 @@ import "./stylesheets/Timer.css";
 
 function Timer () {
     const timerId = useRef<NodeJS.Timeout | undefined>();
-    const timeElapsed = useRef<number>(0);
+    const [timeElapsed, setTimeElapsed] = useState(0)
 
     useEffect (() => {
             countup();
@@ -30,7 +30,7 @@ function Timer () {
 
     function countup(): void {
         timerId.current = setInterval(
-            () => {timeElapsed.current += 1},
+            () => {setTimeElapsed(prev => prev + 1)},
             1000);
     }
 
@@ -50,8 +50,8 @@ function Timer () {
     // }
 
     function getDisplayTime (): string {
-        const minutes = Math.floor(timeElapsed.current / 60);
-        const seconds = timeElapsed.current % 60;
+        const minutes = Math.floor(timeElapsed / 60);
+        const seconds = timeElapsed % 60;
 
         const strMinutes = minutes < 10 ? "0" + String(minutes) : String(minutes);
         const strSeconds = seconds < 10 ? "0" + String(seconds) : String(seconds);
