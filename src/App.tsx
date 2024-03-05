@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 import Game from "./Game";
 import ScorePage from "./ScorePage";
 import HeaderBar from "./HeaderBar";
 import "./stylesheets/App.css";
 import GameContext from "./GameContext";
+
+import {gameTimer} from "./definitions"
 
 const initialSettings = {
   size: 8,
@@ -14,10 +16,22 @@ const initialSettings = {
 function App() {
   const [gameSettings, setGameSettings] = useState(initialSettings);
   const [gameState, setGameState] = useState("ACTIVE");
+  const gameTimer = useRef<gameTimer>({id: undefined, seconds: 0});
 
-  let score = 0;
-  function setScore(secs: number): void {
-    score = secs;
+  useEffect(() => {
+    countup();
+
+    return stopTimer;
+  }, []);
+
+  function countup(): void {
+    gameTimer.current.id = setInterval(() => {
+     gameTimer.current.seconds++;
+    }, 1000);
+  }
+
+  function stopTimer(): void {
+    clearInterval(gameTimer.current.id);
   }
 
   /*TODO: Make a state for gameState here. It can be ACTIVE, PAUSED, WON, or LOST.
@@ -27,7 +41,7 @@ function App() {
   return (
     <GameContext.Provider value={gameState}>
       <div className="App">
-        <HeaderBar setScore={setScore} />
+        <HeaderBar timerRef={gameTimer} />
         {gameState === "ACTIVE" && (
           <Game
             size={gameSettings.size}
@@ -35,7 +49,7 @@ function App() {
             setGameState={setGameState}
           />
         )}
-        {gameState === "WON" && <ScorePage newScoreSeconds={score} />}
+        {gameState === "WON" && <ScorePage newScoreSeconds={gameTimer.current.seconds} />}
       </div>
     </GameContext.Provider>
   );

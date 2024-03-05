@@ -2,6 +2,7 @@ import { useRef, useState, useEffect, useContext } from "react";
 import "./stylesheets/Timer.css";
 import { getDisplayTime } from "./utils";
 import GameContext from "./GameContext";
+import { gameTimer } from "./definitions";
 
 // interface TimerPropsInterface {
 //     timerSeconds: number;
@@ -21,32 +22,7 @@ import GameContext from "./GameContext";
  */
 //TODO: I'm going to need to put something about the timer, fn's or otherwise
 //  into context, if I want to pause from rendering other stuff etc. (settings, eg)
-function Timer({ setScore }: { setScore: (secs: number) => void }) {
-  const timerId = useRef<NodeJS.Timeout | undefined>();
-  const [timeElapsed, setTimeElapsed] = useState(0);
-  const gameState = useContext(GameContext);
-
-  useEffect(() => {
-    countup();
-
-    return stopTimer;
-  }, []);
-
-  function countup(): void {
-    timerId.current = setInterval(() => {
-      setTimeElapsed((prev) => prev + 1);
-    }, 1000);
-  }
-
-  function stopTimer(): void {
-    clearInterval(timerId.current);
-  }
-
-  //report score on game win
-  if (gameState === "WON") {
-    setScore(timeElapsed);
-  }
-
+function Timer({ timerRef }: { timerRef: React.MutableRefObject<gameTimer> }) {
   //TODO: need any of this?
   //If no timer:
   // if (timerSeconds === 0) {
@@ -60,7 +36,7 @@ function Timer({ setScore }: { setScore: (secs: number) => void }) {
 
   return (
     <div className="Timer">
-      <span>{getDisplayTime(timeElapsed)}</span>
+      <span>{getDisplayTime(timerRef.current.seconds)}</span>
     </div>
   );
 }

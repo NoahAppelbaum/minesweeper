@@ -1,6 +1,7 @@
 import Timer from "./Timer";
 import JocelynFace from "./JocelynFace";
 import "./stylesheets/HeaderBar.css";
+import { gameTimer } from "./definitions";
 
 //TODO: This needs props for rendered components
 /** HeaderBar
@@ -9,14 +10,18 @@ import "./stylesheets/HeaderBar.css";
  * App -> HeaderBar -> {TODO: Components}
  */
 
-function HeaderBar({ setScore }: { setScore: (secs: number) => void }) {
+function HeaderBar({
+  timerRef,
+}: {
+  timerRef: React.MutableRefObject<gameTimer>;
+}) {
   return (
     <div className="HeaderBar">
       {/* TODO: size-change button(s) */}
       <h1 className="logo">Jocelyn Sweeper</h1>
       <JocelynFace />
       <div className="HeaderBar-items">
-        <Timer setScore={setScore} />
+        <Timer timerRef={timerRef}/>
         {/*TODO: inline-block'd info button and refresh(restart) button */}
       </div>
     </div>
