@@ -43,7 +43,8 @@ function Timer({ setScore }: { setScore: (secs: number) => void }) {
   }
 
   //report score on game win
-  if (gameState === "WON") {
+  if (gameState === "WINNING") {
+    console.log("setting the score");
     setScore(timeElapsed);
   }
 

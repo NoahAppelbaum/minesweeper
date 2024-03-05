@@ -18,10 +18,15 @@ function App() {
   let score = 0;
   function setScore(secs: number): void {
     score = secs;
+    console.log("the score is:", score);
   }
 
-  /*TODO: Make a state for gameState here. It can be ACTIVE, PAUSED, WON, or LOST.
-  This can be passed/drilled as needed to trigger warnings, and passed back up via callbacks */
+  if (gameState === "WINNING") {
+    setTimeout(()=>{
+      setGameState("WON");
+    }, 10);
+  }
+
 
   //TODO: fn(s) for changing settings
   return (

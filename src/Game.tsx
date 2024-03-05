@@ -71,7 +71,8 @@ function Game({size, nMines, setGameState}: GamePropsInterface) {
     //TODO: prompt restart
     function winGame (): void {
         setBoard(prev => revealAll(prev));
-        setGameState("WON");
+        console.log("winning the game");
+        setGameState("WINNING");
         setGameActive(false);
     }
 

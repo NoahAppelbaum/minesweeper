@@ -3,7 +3,7 @@ import { getDisplayTime } from "./utils";
 
 import "./stylesheets/ScorePage.css";
 
-const ARR10 = [0,1,2,3,4,5,6,7,8,9,10];
+const ARR10 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 //TODO: MS???!
 //TODO: will have to update and have separate categories for diff difficulties.
 //      `localStorage.getItem(`highScores${difficulty}`)`
@@ -24,10 +24,14 @@ function ScorePage({ newScoreSeconds }: ScorePagePropsInterface) {
     else newScores = [...scores];
 
     if (typeof newScores === "object") {
-      for (let i = 0; i < newScores.length; i++) {
-        if (newScoreSeconds < newScores[i]) {
-          setNewEntry(i);
-          newScores.splice(i, 0, newScoreSeconds);
+      if (!newScores.length) {
+        newScores.push(newScoreSeconds);
+      } else {
+        for (let i = 0; i < newScores.length; i++) {
+          if (newScoreSeconds < newScores[i]) {
+            setNewEntry(i);
+            newScores.splice(i, 0, newScoreSeconds);
+          }
         }
       }
     }
@@ -41,7 +45,7 @@ function ScorePage({ newScoreSeconds }: ScorePagePropsInterface) {
     <div className="ScorePage">
       <h2>{getDisplayTime(newScoreSeconds)}</h2>
       <ol className="ScorePage-scores">
-        {ARR10.map(n => {
+        {ARR10.map((n) => {
           return (
             <li key={n} className={n === newEntry ? "new-entry" : ""}>
               {scores[n] ? scores[n] : "-"}
