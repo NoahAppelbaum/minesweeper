@@ -1,5 +1,7 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import "./stylesheets/Timer.css";
+import { getDisplayTime } from "./utils";
+import GameContext from "./GameContext";
 
 // interface TimerPropsInterface {
 //     timerSeconds: number;
@@ -17,55 +19,50 @@ import "./stylesheets/Timer.css";
  *
  * Header -> Timer
  */
+//TODO: I'm going to need to put something about the timer, fn's or otherwise
+//  into context, if I want to pause from rendering other stuff etc. (settings, eg)
+function Timer({ setScore }: { setScore: (secs: number) => void }) {
+  const timerId = useRef<NodeJS.Timeout | undefined>();
+  const [timeElapsed, setTimeElapsed] = useState(0);
+  const gameState = useContext(GameContext);
 
-function Timer () {
-    const timerId = useRef<NodeJS.Timeout | undefined>();
-    const [timeElapsed, setTimeElapsed] = useState(0)
+  useEffect(() => {
+    countup();
 
-    useEffect (() => {
-            countup();
+    return stopTimer;
+  }, []);
 
-            return stopTimer;
-        }, [])
+  function countup(): void {
+    timerId.current = setInterval(() => {
+      setTimeElapsed((prev) => prev + 1);
+    }, 1000);
+  }
 
-    function countup(): void {
-        timerId.current = setInterval(
-            () => {setTimeElapsed(prev => prev + 1)},
-            1000);
-    }
+  function stopTimer(): void {
+    clearInterval(timerId.current);
+  }
 
-    function stopTimer(): void {
-        clearInterval(timerId.current);
-    }
+  //report score on game win
+  if (gameState === "WON") {
+    setScore(timeElapsed);
+  }
 
-    //TODO: need any of this?
-    //If no timer:
-    // if (timerSeconds === 0) {
-    //     clearInterval(timerId.current);
-    //     return (
-    //         <div className="Timer">
-    //             <span>--:--</span>
-    //         </div>
-    //     )
-    // }
+  //TODO: need any of this?
+  //If no timer:
+  // if (timerSeconds === 0) {
+  //     clearInterval(timerId.current);
+  //     return (
+  //         <div className="Timer">
+  //             <span>--:--</span>
+  //         </div>
+  //     )
+  // }
 
-    function getDisplayTime (): string {
-        const minutes = Math.floor(timeElapsed / 60);
-        const seconds = timeElapsed % 60;
-
-        const strMinutes = minutes < 10 ? "0" + String(minutes) : String(minutes);
-        const strSeconds = seconds < 10 ? "0" + String(seconds) : String(seconds);
-
-        //TODO: fancier clock display?
-        return strMinutes + ":" + strSeconds;
-    }
-
-    return (
-        <div className="Timer">
-            <span>{getDisplayTime()}</span>
-        </div>
-    )
-
+  return (
+    <div className="Timer">
+      <span>{getDisplayTime(timeElapsed)}</span>
+    </div>
+  );
 }
 
 export default Timer;

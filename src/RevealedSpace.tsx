@@ -21,7 +21,6 @@ function RevealedSpace ({val}: RevealedSpacePropsInterface) {
         return "";
     }
 
-    //TODO: get some art! :)
     return (
       <div
         className="RevealedSpace"

@@ -33,7 +33,7 @@ function JocelynFace() {
       src="jface.png"
       style={{
         transformOrigin: "center center",
-        transform: `rotate(${lookAngle}deg)`,
+        transform: `rotate(${lookAngle}deg) translateY(-25px)`,
       }}
       width="200px"
     />

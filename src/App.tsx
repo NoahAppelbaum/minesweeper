@@ -1,27 +1,50 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import Game from './Game';
-import HeaderBar from './HeaderBar';
+import Game from "./Game";
+import ScorePage from "./ScorePage";
+import HeaderBar from "./HeaderBar";
 import "./stylesheets/App.css";
+import GameContext from "./GameContext";
 
 const initialSettings = {
   size: 8,
   nMines: 10,
-  seconds: 60
-}
+};
 
 function App() {
-  const [gameSettings, setGameSettings] = useState(initialSettings)
+  const [gameSettings, setGameSettings] = useState(initialSettings);
+  const [gameState, setGameState] = useState("ACTIVE");
+
+  let score = 0;
+  function setScore(secs: number): void {
+    score = secs;
+  }
+
   /*TODO: Make a state for gameState here. It can be ACTIVE, PAUSED, WON, or LOST.
   This can be passed/drilled as needed to trigger warnings, and passed back up via callbacks */
 
   //TODO: fn(s) for changing settings
   return (
-    <div className='App'>
-      <HeaderBar timerSeconds={gameSettings.seconds} />
-      <Game size={gameSettings.size} nMines={gameSettings.nMines} />
-    </div>
-  )
+    <GameContext.Provider value={gameState}>
+      <div className="App">
+        <HeaderBar setScore={setScore} />
+        {gameState === "ACTIVE" && (
+          <Game
+            size={gameSettings.size}
+            nMines={gameSettings.nMines}
+            setGameState={setGameState}
+          />
+        )}
+        {gameState === "WON" && <ScorePage newScoreSeconds={score} />}
+      </div>
+    </GameContext.Provider>
+  );
 }
 
-export default App
+export default App;
+/*
+FIXME:
+there's a variable that holds the seconds elapsed for endgame here -- declared, then initialized on gamewin
+a callback from Game sets the state to WON and sets that value^
+...which it gets from timer... how?
+*/

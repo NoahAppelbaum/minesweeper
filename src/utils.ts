@@ -98,4 +98,20 @@ function revealAll (board: BoardSpace[][]): BoardSpace[][] {
   return revealed;
 }
 
-export { makeBoard, splashFlipZeroes, revealAll, placeMines };
+
+/*********************** Actual Utils */
+//TODO: ms?
+/** getDisplayTime:
+ * return [seconds] as string in 00:00 format
+ */
+function getDisplayTime(totalSeconds: number): string {
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+
+  const strMinutes = minutes < 10 ? "0" + String(minutes) : String(minutes);
+  const strSeconds = seconds < 10 ? "0" + String(seconds) : String(seconds);
+
+  return strMinutes + ":" + strSeconds;
+}
+
+export { makeBoard, splashFlipZeroes, revealAll, placeMines, getDisplayTime };

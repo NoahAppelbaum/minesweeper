@@ -8,6 +8,7 @@ import "./stylesheets/Game.css"
 interface GamePropsInterface {
     size: number
     nMines: number
+    setGameState: (state: string) => void;
 }
 
 /** Game
@@ -21,7 +22,7 @@ state:
     - gameActive -- Whether the current game is active/ongoing
 
 App->Game->{ BlankSpace, RevealedSpace } */
-function Game({size, nMines}: GamePropsInterface) {
+function Game({size, nMines, setGameState}: GamePropsInterface) {
     const [board, setBoard] = useState(makeBoard(size, nMines));
     const [gameActive, setGameActive] = useState(true);
     const [armed, setArmed] = useState(false);
@@ -70,7 +71,7 @@ function Game({size, nMines}: GamePropsInterface) {
     //TODO: prompt restart
     function winGame (): void {
         setBoard(prev => revealAll(prev));
-        alert("You Won!");
+        setGameState("WON");
         setGameActive(false);
     }
 
