@@ -7,18 +7,15 @@ import "./stylesheets/App.css";
 import GameContext from "./GameContext";
 
 const initialSettings = {
-  size: 8,
-  nMines: 10,
+  size: 4,
+  nMines: 1,
 };
 
 function App() {
   const [gameSettings, setGameSettings] = useState(initialSettings);
   const [gameState, setGameState] = useState("ACTIVE");
+  const [score, setScore] = useState(0)
 
-  let score = 0;
-  function setScore(secs: number): void {
-    score = secs;
-  }
 
   /*TODO: Make a state for gameState here. It can be ACTIVE, PAUSED, WON, or LOST.
   This can be passed/drilled as needed to trigger warnings, and passed back up via callbacks */
