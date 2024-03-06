@@ -25,6 +25,7 @@ function Timer({ setScore }: { setScore: (secs: number) => void }) {
   const timerId = useRef<NodeJS.Timeout | undefined>();
   const [timeElapsed, setTimeElapsed] = useState(0);
   const gameState = useContext(GameContext);
+  const [reported, setReported] = useState(false);
 
   useEffect(() => {
     countup();
@@ -43,8 +44,11 @@ function Timer({ setScore }: { setScore: (secs: number) => void }) {
   }
 
   //report score on game win
-  if (gameState === "WON") {
+  if (gameState === "WON" && !reported) {
+    stopTimer();
+    console.log("calling setScore with elapsed time", timeElapsed);
     setScore(timeElapsed);
+    setReported(true);
   }
 
   //TODO: need any of this?
