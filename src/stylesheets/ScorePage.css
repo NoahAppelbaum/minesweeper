@@ -1,9 +1,19 @@
+.ScorePage {
+  background-color: green;
+  padding: 10px
+}
 
+.ScorePage h2 {
+  margin-left: 20px;
+}
 
-.new-entry::before {
+.new-entry::after {
+  content: "";
   width: 0;
   height: 0;
-  border-top: 12px solid transparent;
-  border-bottom: 12px solid transparent;
-  border-left: 12px solid orangered;
+  margin-left: 4px;
+  border-top: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-right: 6px solid orangered;
+
 }
