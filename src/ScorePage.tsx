@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
 import { getDisplayTime } from "./utils";
 
 import "./stylesheets/ScorePage.css";
 
-const ARR10 = [0,1,2,3,4,5,6,7,8,9,10];
+const ARR10 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 //TODO: MS???!
 //TODO: will have to update and have separate categories for diff difficulties.
 //      `localStorage.getItem(`highScores${difficulty}`)`
@@ -11,49 +10,53 @@ const ARR10 = [0,1,2,3,4,5,6,7,8,9,10];
 interface ScorePagePropsInterface {
   newScoreSeconds: number;
 }
-//FIXME: OK THIS WORKS NOW, BUUUUT only do the logic if score isn't 0
+
+/** ScorePage
+ * Lists high scores and fetches/assigns high score data from localStorage
+*/
 function ScorePage({ newScoreSeconds }: ScorePagePropsInterface) {
   console.log("score page got passed", newScoreSeconds);
-  // const [scores, setScores] = useState(
-  //   localStorage.getItem("highScores") || new Array<number>()
-  // );
-  // const [newEntry, setNewEntry] = useState<number | null>(null);
+  const storedScores = localStorage.getItem("highScores");
+  const scores: number[] = storedScores
+    ? JSON.parse(storedScores).scores
+    : new Array<number>();
+  let newEntry: null | number = null;
 
-  // useEffect(() => {
-  //   let newScores: string | number[];
-  //   if (typeof scores === "string") newScores = JSON.parse(scores).scores;
-  //   else newScores = [...scores];
+  if (newScoreSeconds > 0) {
+    for (let i = 0; i < 10; i++) {
+      if (newScoreSeconds < scores[i] || !scores[i]) {
+        newEntry = i;
+        scores.splice(i, 0, newScoreSeconds);
+        if (scores.length > 10) {
+          scores.pop();
+        }
+        break;
+      }
+    }
 
-  //   if (typeof newScores === "object") {
-  //     for (let i = 0; i < newScores.length; i++) {
-  //       if (newScoreSeconds < newScores[i]) {
-  //         setNewEntry(i);
-  //         newScores.splice(i, 0, newScoreSeconds);
-  //       }
-  //     }
-  //   }
+    //TODO: account for difficulties here too, if implementing
+    localStorage.setItem("highScores", JSON.stringify({ scores }));
+  }
 
-  //   setScores(newScores);
-  //   //TODO: account for difficulties here too, if implementing
-  //   localStorage.setItem("highScores", JSON.stringify({ scores: newScores }));
-  // }, []);
-
-  // return (
-  //   <div className="ScorePage">
-  //     <h2>{getDisplayTime(newScoreSeconds)}</h2>
-  //     <ol className="ScorePage-scores">
-  //       {ARR10.map(n => {
-  //         return (
-  //           <li key={n} className={n === newEntry ? "new-entry" : ""}>
-  //             {scores[n] ? scores[n] : "-"}
-  //           </li>
-  //         );
-  //       })}
-  //     </ol>
-  //   </div>
-  // );
-
-  return <h2>{getDisplayTime(newScoreSeconds)}</h2>;
+  return (
+    <div className="ScorePage">
+      <h2>High Scores</h2>
+      <h2>
+        {!!newEntry && "🌸 "}
+        {getDisplayTime(newScoreSeconds)}
+        {!!newEntry && " 🌸"}
+      </h2>
+      <ol className="ScorePage-scores">
+        {ARR10.map((n) => {
+          return (
+            <li key={n} className={n === newEntry ? "new-entry" : ""}>
+              {scores[n] ? getDisplayTime(scores[n]) : "-"}
+            </li>
+          );
+        })}
+      </ol>
+    </div>
+  );
 }
 
 export default ScorePage;
