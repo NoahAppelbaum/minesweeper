@@ -5,17 +5,25 @@ import ScorePage from "./ScorePage";
 import HeaderBar from "./HeaderBar";
 import "./stylesheets/App.css";
 import GameContext from "./GameContext";
+import SettingsForm from "./SettingsForm";
 
 const initialSettings = {
-  size: 4,
-  nMines: 1,
+  size: 8,
+  nMines: 10,
 };
 
 function App() {
   const [gameSettings, setGameSettings] = useState(initialSettings);
-  const [gameState, setGameState] = useState("ACTIVE");
+  const [gameState, setGameState] = useState("SETTINGS");
   const [score, setScore] = useState(0)
 
+  function startGame(newSettings:{size: number, nMines: number}):void {
+    if(newSettings) {
+      setGameSettings(newSettings);
+    }
+    setScore(0);
+    setGameState("ACTIVE");
+  }
 
   /*TODO: Make a state for gameState here. It can be ACTIVE, PAUSED, WON, or LOST.
   This can be passed/drilled as needed to trigger warnings, and passed back up via callbacks */
@@ -25,6 +33,9 @@ function App() {
     <GameContext.Provider value={gameState}>
       <div className="App">
         <HeaderBar setScore={setScore} />
+        {gameState === "SETTINGS" && (
+          <SettingsForm startGame={startGame} />
+        )}
         {gameState === "ACTIVE" && (
           <Game
             size={gameSettings.size}
