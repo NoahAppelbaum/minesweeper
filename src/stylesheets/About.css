@@ -1,0 +1,50 @@
+.About {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  background-color: green;
+  padding: 10px;
+
+}
+
+.About-chunk {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.About-back-button {
+  position: sticky;
+  top: 10px;
+  margin-left: 90%;
+  margin-top: 5px;
+
+  background-color: lightgreen;
+  border-radius: 50%;
+  height: 50px;
+
+  color: orangered;
+  font-size: larger;
+
+  cursor: pointer;
+}
+
+
+.About p {
+  font-size: larger;
+}
+
+.About img {
+  width: 200px;
+}
+
+.About img.rounded {
+  border-radius: 15px;
+}
+
+.About a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
