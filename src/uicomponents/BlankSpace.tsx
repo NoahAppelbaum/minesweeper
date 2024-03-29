@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./stylesheets/BlankSpace.css"
+import "../stylesheets/BlankSpace.css"
 
 interface BlankSpacePropsInterface {
     coords: [number, number];

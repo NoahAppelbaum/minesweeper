@@ -1,4 +1,4 @@
-import { getDisplayTime } from "./utils";
+import { getDisplayTime } from "./lib/utils";
 
 import "./stylesheets/ScorePage.css";
 

@@ -1,5 +1,5 @@
 import { useState, useEffect, createRef } from "react";
-import { useRect } from "./useRect";
+import { useRect } from "../lib/useRect";
 
 function JocelynFace() {
   // const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });

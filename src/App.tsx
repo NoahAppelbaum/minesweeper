@@ -6,6 +6,7 @@ import HeaderBar from "./HeaderBar";
 import "./stylesheets/App.css";
 import GameContext from "./GameContext";
 import SettingsForm from "./SettingsForm";
+import About from "./About";
 
 const initialSettings = {
   size: 8,
@@ -32,9 +33,12 @@ function App() {
   return (
     <GameContext.Provider value={gameState}>
       <div className="App">
-        <HeaderBar setScore={setScore} />
+        <HeaderBar setScore={setScore} setGameState={setGameState} />
         {gameState === "SETTINGS" && (
           <SettingsForm startGame={startGame} />
+        )}
+        {gameState === "ABOUT" && (
+          <About setGameState={setGameState}/>
         )}
         {gameState === "ACTIVE" && (
           <Game

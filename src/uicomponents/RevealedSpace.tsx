@@ -1,4 +1,4 @@
-import "./stylesheets/RevealedSpace.css"
+import "../stylesheets/RevealedSpace.css"
 
 interface RevealedSpacePropsInterface {
     val: number;

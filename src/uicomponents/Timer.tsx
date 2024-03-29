@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect, useContext } from "react";
-import "./stylesheets/Timer.css";
-import { getDisplayTime } from "./utils";
-import GameContext from "./GameContext";
+import "../stylesheets/Timer.css";
+import { getDisplayTime } from "../lib/utils";
+import GameContext from "../GameContext";
 
 // interface TimerPropsInterface {
 //     timerSeconds: number;

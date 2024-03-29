@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { makeBoard, splashFlipZeroes, revealAll, placeMines } from "./utils";
+import { makeBoard, splashFlipZeroes, revealAll, placeMines } from "./lib/utils";
 
-import RevealedSpace from "./RevealedSpace";
-import BlankSpace from "./BlankSpace";
+import RevealedSpace from "./uicomponents/RevealedSpace";
+import BlankSpace from "./uicomponents/BlankSpace";
 import "./stylesheets/Game.css"
 
 interface GamePropsInterface {
